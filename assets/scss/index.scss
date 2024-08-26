@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+* FONT FAMILY
+*/
+@font-face {
+  font-family: 'cera-round';
+  src: url("../fonts/cera-round.otf") format("opentype");
+}
+
+
+*{
+  font-family: 'cera-round', serif;
+}
