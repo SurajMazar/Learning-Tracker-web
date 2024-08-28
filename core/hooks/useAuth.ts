@@ -1,6 +1,6 @@
 import useStore from "@/core/hooks/useStore";
 import {useDispatch} from "react-redux";
-import {useMutation} from "react-query";
+import {useMutation, useQuery} from "react-query";
 import {LoginFormInterface} from "@/@types/form/login";
 import AuthService from "@/core/services/auth.service";
 import {setLocalStorage} from "@/core/utils/localstorage.utils";
@@ -8,8 +8,10 @@ import appConfig from "@/settings/config/app.config";
 import authSlice from "@/core/store/slice/auth.slice";
 import {useState} from "react";
 import router from "next/router";
+import useNotification from "@/core/hooks/useNotification";
+import {FormInstance} from "antd";
 
-const useAuth = () => {
+const useAuth = (loginForm?: FormInstance<LoginFormInterface>) => {
 
     /**
      * HOOKS
@@ -17,7 +19,7 @@ const useAuth = () => {
     const {auth} = useStore()
     const dispatch = useDispatch()
     const [loginErrors, setLoginError] = useState()
-
+    const {notify} = useNotification()
     /**
      * Methods
      */
@@ -35,8 +37,19 @@ const useAuth = () => {
             /** REDIRECT TO DASHBOARD */
             await router.push('/')
         },
-        onError(error) {
+        onError(error: any) {
             setLoginError(error as any)
+            if (error?.message) {
+                if (loginForm) {
+                    loginForm.setFields([
+                        {
+                            name: 'email',
+                            errors: [error?.message]
+                        }
+                    ])
+                }
+                notify(error?.message, 'error')
+            }
             dispatch(authSlice.actions.authFailure())
         }
     })
@@ -49,11 +62,28 @@ const useAuth = () => {
         await router.push('/login')
     }
 
+    /**
+     * FETCH AUTH USER
+     */
+    const {mutate: fetchAuthUser} = useMutation(['auth-user'], () => {
+        dispatch(authSlice.actions.authUserFetchStart())
+        return AuthService.fetchAuthUser()
+    }, {
+        onSuccess(data) {
+            dispatch(authSlice.actions.authUserFetchSuccess(data?.user))
+        },
+        onError() {
+            dispatch(authSlice.actions.authFailure())
+        },
+        retry:0
+    })
+
     return {
         auth,
         handleLogin: loginMutation.mutate,
         handleLogout: logout,
-        loginErrors
+        loginErrors,
+        fetchAuthUser
     }
 }
 

@@ -28,8 +28,8 @@ const httpBase = (
     const defaultHeaders = {
         'Content-Type': 'multipart/form-data',
         'Access-Control-Allow-Origin': '*',
-        Accept: 'application/json'
-        // 'authorization': `Bearer ${token}`,
+        Accept: 'application/json',
+        'authorization': `Bearer ${token}`,
     }
 
     const instance = axios.create({

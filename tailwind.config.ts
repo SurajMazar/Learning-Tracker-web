@@ -13,8 +13,8 @@ const config: Config = {
                 primary: '#7B8CDE',
             },
             fontFamily: {
-                'display': ['cera-round'],
-                'body': ['cera-round']
+                'display': ['gilroy'],
+                'body': ['gilroy']
             },
         },
     },

@@ -1,8 +1,8 @@
-import { FetchQueryOptions } from 'react-query'
+import {FetchQueryOptions} from 'react-query'
 import httpBase from './axios.utils'
-import { AxiosRequestConfig } from 'axios'
-import { filterParams, setFormData } from './helper.utils'
-import { message } from 'antd'
+import {AxiosRequestConfig} from 'axios'
+import {filterParams, setFormData} from './helper.utils'
+import {message} from 'antd'
 
 class Http {
     /**
@@ -24,7 +24,7 @@ class Http {
     ) {
         params = filterParams(
             params && params?.queryKey
-                ? { ...(params.queryKey[0] as Record<string, any>) }
+                ? {...(params.queryKey[0] as Record<string, any>)}
                 : {}
         )
 
@@ -157,14 +157,14 @@ export const handleError = (
             Object.keys(error.errors).forEach((key) => {
                 if (notify) message.error(error.errors[key][0])
             })
-            return error.errors
+            return {message: error.message, errors: error.errors as Record<string, Array<string>>}
         } else if (error.message) {
             if (notify) message.error(error.message)
-            return error.message
+            return {message: error.message}
         }
     } else {
         if (notify) message.error(errorMessage || 'Something went wrong')
-        return 'Something went wrong'
+        return {message: 'Something went wrong'}
     }
 }
 

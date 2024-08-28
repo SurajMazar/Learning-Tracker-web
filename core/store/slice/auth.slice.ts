@@ -16,7 +16,7 @@ export interface AuthStore {
  * INITIAL AUTH STORE STATE
  */
 const initialState: AuthStore = {
-    authenticated: false,
+        authenticated: false,
     loadingAuthUser: false,
     authenticating: false,
     token: false

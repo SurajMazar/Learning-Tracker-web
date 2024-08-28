@@ -6,7 +6,7 @@ import type { ThemeConfig } from 'antd'
 const theme: ThemeConfig = {
     token: {
         colorPrimary: '#7B8CDE',
-        fontFamily: 'cera-round'
+        fontFamily: 'gilroy'
     }
 }
 

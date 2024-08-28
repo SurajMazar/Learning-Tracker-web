@@ -16,7 +16,7 @@ class AuthService {
                 token: response?.data?.token as string
             }
         } catch (exception) {
-            throw handleError(exception, true)
+            throw handleError(exception)
         }
     }
 

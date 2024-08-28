@@ -24,9 +24,9 @@ const ApplicationBoot: React.FC<PropsWithChildren<{}>> = (props) => {
     /**
      * INITIALIZATION
      */
-    const init = () => {
+    const init = async () => {
         if (isClient()) {
-            const token = getLocalStorage(APP_CONFIG.auth_token)
+            const token = await getLocalStorage(APP_CONFIG.auth_token)
             if (token) dispatch(AuthSlice.actions.setToken(token))
         }
         setBooted(true)
