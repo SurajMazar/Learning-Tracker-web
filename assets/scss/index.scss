@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+* FONT FAMILY
+*/
+@font-face {
+  font-family: 'gilroy';
+  src: url("../fonts/Gilroy-Medium.woff") format("woff");
+}
+
+
+*{
+  font-family: 'gilroy', serif;
+}
