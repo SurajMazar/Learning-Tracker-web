@@ -5,6 +5,7 @@ import store from "@/core/store/store";
 import authSlice from "@/core/store/slice/auth.slice";
 import {message} from "antd";
 import router from "next/router";
+import {handleError} from "@/core/utils/http.utils";
 
 /**
  * AXIOS WRAPPER
@@ -72,7 +73,7 @@ const httpBase = (
                     shallow: false
                 })
             }
-            return Promise.reject(error)
+            return Promise.reject(handleError(error))
         }
     )
 

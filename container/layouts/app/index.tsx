@@ -1,5 +1,7 @@
 import React, {PropsWithChildren} from 'react'
 import AuthProtected from "@/container/hoc/AuthProtected";
+import AppHeader from "@/container/layouts/app/components/header";
+import {Layout} from "antd";
 
 const AppLayout: React.FC<PropsWithChildren> = (props) => {
 
@@ -11,7 +13,11 @@ const AppLayout: React.FC<PropsWithChildren> = (props) => {
     return (
         <>
             <AuthProtected>
-                {children}
+                <AppHeader/>
+                <Layout.Content
+                    className={'max-w-[1200px] m-auto p-6'}>
+                    {children}
+                </Layout.Content>
             </AuthProtected>
         </>
     )

@@ -1,6 +1,6 @@
 import useStore from "@/core/hooks/useStore";
 import {useDispatch} from "react-redux";
-import {useMutation, useQuery} from "react-query";
+import {useMutation} from "react-query";
 import {LoginFormInterface} from "@/@types/form/login";
 import AuthService from "@/core/services/auth.service";
 import {setLocalStorage} from "@/core/utils/localstorage.utils";
@@ -34,6 +34,7 @@ const useAuth = (loginForm?: FormInstance<LoginFormInterface>) => {
             setLocalStorage(appConfig.auth_token, data?.token)
             /** STORING IN THE REDUX */
             dispatch(authSlice.actions.authSuccess(data))
+            notify('Welcome', 'success', `Welcome to Learning Tracker ${data?.user?.firstName}`, 'top')
             /** REDIRECT TO DASHBOARD */
             await router.push('/')
         },
@@ -59,6 +60,8 @@ const useAuth = (loginForm?: FormInstance<LoginFormInterface>) => {
      */
     const logout = async () => {
         dispatch(authSlice.actions.reset())
+        localStorage.removeItem(appConfig.auth_token)
+        notify('Success', 'success', 'You have been logged out.')
         await router.push('/login')
     }
 
@@ -75,7 +78,7 @@ const useAuth = (loginForm?: FormInstance<LoginFormInterface>) => {
         onError() {
             dispatch(authSlice.actions.authFailure())
         },
-        retry:0
+        retry: 0
     })
 
     return {

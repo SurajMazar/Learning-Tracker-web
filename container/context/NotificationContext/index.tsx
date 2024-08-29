@@ -1,9 +1,6 @@
-import React, { PropsWithChildren } from 'react'
-import {
-    NotificationContextInterface,
-    NotificationTypeInterface
-} from '@/@types/containers/context/contex'
-import { notification } from 'antd'
+import React, {PropsWithChildren} from 'react'
+import {NotificationContextInterface, NotificationTypeInterface} from '@/@types/containers/context/contex'
+import {notification} from 'antd'
 
 /**
  * NOTIFICATION CONTEXT
@@ -11,7 +8,7 @@ import { notification } from 'antd'
 export const NotificationContext =
     React.createContext<NotificationContextInterface>({} as NotificationContextInterface)
 
-const NotificationWrapper: React.FC<PropsWithChildren> = ({ children }) => {
+const NotificationWrapper: React.FC<PropsWithChildren> = ({children}) => {
     /**
      * HOOKS
      */
@@ -25,9 +22,9 @@ const NotificationWrapper: React.FC<PropsWithChildren> = ({ children }) => {
      * @param placement
      */
     const notify = (
-        message: string,
+        message: string | React.ReactNode,
         type: NotificationTypeInterface = 'success',
-        messageBody = '',
+        messageBody: string | React.ReactNode = '',
         placement: "top" | "topLeft" | "topRight" | "bottom" | "bottomLeft" | "bottomRight" | undefined = undefined
     ) => {
         api[type]({
@@ -35,7 +32,8 @@ const NotificationWrapper: React.FC<PropsWithChildren> = ({ children }) => {
             ...(messageBody && {
                 description: <>{messageBody}</>
             }),
-            placement
+            placement,
+            duration: 1.5
         })
     }
 
